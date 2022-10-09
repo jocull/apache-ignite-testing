@@ -4,14 +4,20 @@ version: "3.9"
 services:
   ignite01:
     image: apacheignite/ignite:2.13.0-jdk11
+    ports:
+      - "10800:10800"
     # environment:
     #   - IGNITE_TCP_DISCOVERY_ADDRESSES=ignite02,ignite03
   ignite02:
     image: apacheignite/ignite:2.13.0-jdk11
+    ports:
+      - "10801:10800"
     # environment:
     #   - IGNITE_TCP_DISCOVERY_ADDRESSES=ignite01,ignite03
   ignite03:
     image: apacheignite/ignite:2.13.0-jdk11
+    ports:
+      - "10802:10800"
     # environment:
     #   - IGNITE_TCP_DISCOVERY_ADDRESSES=ignite01,ignite02
   # console:
