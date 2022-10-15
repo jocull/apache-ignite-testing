@@ -3,7 +3,6 @@ package com.codefromjames;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.client.ClientCache;
-import org.apache.ignite.client.ClientCacheConfiguration;
 import org.apache.ignite.client.ClientException;
 import org.apache.ignite.client.IgniteClient;
 import org.apache.ignite.configuration.ClientConfiguration;
@@ -15,7 +14,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.Instant;
 import java.util.Set;
-import java.util.UUID;
 
 @SpringBootApplication
 public class SpringBootConsoleApplication implements CommandLineRunner {
@@ -36,7 +34,12 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
         }
 
         final ClientConfiguration cfg = new ClientConfiguration()
-                .setAddresses("localhost:10800", "localhost:10801", "localhost:10802")
+                .setAddresses(
+                        // Cluster A
+                        "localhost:10800", "localhost:10801", "localhost:10802",
+                        // Cluster B
+                        "localhost:10803", "localhost:10804", "localhost:10805"
+                )
                 .setPartitionAwarenessEnabled(true)
                 .setReconnectThrottlingPeriod(5_000);
 

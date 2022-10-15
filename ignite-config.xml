@@ -15,7 +15,7 @@
                 <!-- Set the cache mode. -->
                 <property name="cacheMode" value="PARTITIONED"/>
                 <!-- Number of backup copies -->
-                <property name="backups" value="1"/>
+                <property name="backups" value="3"/>
                 <!-- Synchronization mode -->
                 <property name="writeSynchronizationMode" value="FULL_SYNC"/>
                 <!-- Partition loss policy -->

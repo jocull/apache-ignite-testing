@@ -1,0 +1,41 @@
+version: "3.9"
+networks:
+  default:
+    name: ignite-net
+    external: true
+services:
+  ignite01:
+    image: apacheignite/ignite:2.13.0-jdk11
+    volumes:
+      - ../ignite-config.xml:/ignite-config.xml:ro
+    ports:
+      - "10800:10800"
+    environment:
+      - CONFIG_URI=/ignite-config.xml
+  ignite02:
+    image: apacheignite/ignite:2.13.0-jdk11
+    volumes:
+      - ../ignite-config.xml:/ignite-config.xml:ro
+    ports:
+      - "10801:10800"
+    environment:
+      - CONFIG_URI=/ignite-config.xml
+  ignite03:
+    image: apacheignite/ignite:2.13.0-jdk11
+    volumes:
+      - ../ignite-config.xml:/ignite-config.xml:ro
+    ports:
+      - "10802:10800"
+    environment:
+      - CONFIG_URI=/ignite-config.xml
+  ignite-activate-01:
+    image: apacheignite/ignite:2.13.0-jdk11
+    depends_on:
+      - ignite01
+      - ignite02
+      - ignite03
+    command: >
+      bash -c "
+      sleep 10
+      && /opt/ignite/apache-ignite/bin/control.sh --host ignite01 --set-state ACTIVE --yes
+      && /opt/ignite/apache-ignite/bin/control.sh --host ignite01 --baseline auto_adjust enable timeout 60000 --yes"
