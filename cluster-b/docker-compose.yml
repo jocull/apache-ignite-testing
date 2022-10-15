@@ -12,6 +12,7 @@ services:
       - "10803:10800"
     environment:
       - CONFIG_URI=/ignite-config.xml
+      - IGNITE_QUIET=false
   ignite05:
     image: apacheignite/ignite:2.13.0-jdk11
     volumes:
@@ -20,6 +21,7 @@ services:
       - "10804:10800"
     environment:
       - CONFIG_URI=/ignite-config.xml
+      - IGNITE_QUIET=false
   ignite06:
     image: apacheignite/ignite:2.13.0-jdk11
     volumes:
@@ -28,6 +30,7 @@ services:
       - "10805:10800"
     environment:
       - CONFIG_URI=/ignite-config.xml
+      - IGNITE_QUIET=false
   ignite-activate-02:
     image: apacheignite/ignite:2.13.0-jdk11
     depends_on:
