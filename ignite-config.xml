@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.apache.ignite.configuration.IgniteConfiguration">
+        <property name="cacheConfiguration">
+            <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                <!-- Set the cache name. -->
+                <property name="name" value="myCache"/>
+                <!-- Group the cache belongs to. -->
+                <property name="groupName" value="debugGroup"/>
+                <!-- Set the cache mode. -->
+                <property name="cacheMode" value="PARTITIONED"/>
+                <!-- Number of backup copies -->
+                <property name="backups" value="1"/>
+                <!-- Synchronization mode -->
+                <property name="writeSynchronizationMode" value="FULL_SYNC"/>
+                <!-- Partition loss policy -->
+                <property name="partitionLossPolicy" value="READ_WRITE_SAFE"/>
+                <!-- Set transaction capabilities -->
+                <!-- <property name="atomicityMode" value="TRANSACTIONAL"/> -->
+            </bean>
+        </property>
+        <!-- Persist to disk -->
+        <property name="dataStorageConfiguration">
+            <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
+                <property name="defaultDataRegionConfiguration">
+                    <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                        <property name="persistenceEnabled" value="true"/>
+                    </bean>
+                </property>
+                <property name="storagePath" value="/opt/storage"/>
+            </bean>
+        </property>
+    </bean>
+</beans>
