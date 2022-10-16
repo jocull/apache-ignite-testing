@@ -15,13 +15,13 @@
                 <!-- Set the cache mode. -->
                 <property name="cacheMode" value="PARTITIONED"/>
                 <!-- Number of backup copies -->
-                <property name="backups" value="3"/>
+                <property name="backups" value="2"/>
                 <!-- Synchronization mode -->
                 <property name="writeSynchronizationMode" value="FULL_SYNC"/>
                 <!-- Partition loss policy -->
                 <property name="partitionLossPolicy" value="READ_WRITE_SAFE"/>
                 <!-- Set transaction capabilities -->
-                <!-- <property name="atomicityMode" value="TRANSACTIONAL"/> -->
+                <property name="atomicityMode" value="TRANSACTIONAL"/>
             </bean>
         </property>
         <!-- Persist to disk -->
