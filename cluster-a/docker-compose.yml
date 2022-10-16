@@ -41,4 +41,4 @@ services:
       bash -c "
       sleep 10
       && /opt/ignite/apache-ignite/bin/control.sh --host ignite01 --set-state ACTIVE --yes
-      && /opt/ignite/apache-ignite/bin/control.sh --host ignite01 --baseline auto_adjust enable timeout 60000 --yes"
+      && /opt/ignite/apache-ignite/bin/control.sh --host ignite01 --baseline auto_adjust enable timeout 10000 --yes"
