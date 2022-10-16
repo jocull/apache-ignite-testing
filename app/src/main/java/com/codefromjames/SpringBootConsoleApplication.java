@@ -4,6 +4,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.client.ClientCache;
 import org.apache.ignite.client.ClientException;
+import org.apache.ignite.client.ClientTransaction;
 import org.apache.ignite.client.IgniteClient;
 import org.apache.ignite.configuration.ClientConfiguration;
 import org.slf4j.Logger;
@@ -13,11 +14,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @SpringBootApplication
 public class SpringBootConsoleApplication implements CommandLineRunner {
     private static Logger LOGGER = LoggerFactory.getLogger(SpringBootConsoleApplication.class);
+
+    private Map<Integer, String> lastAccepted = new HashMap<>(300);
 
     public static void main(String[] args) {
         LOGGER.info("STARTING THE APPLICATION");
@@ -55,10 +60,28 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
                     }
 
                     final Instant now = Instant.now();
-                    LOGGER.info("Previous {}, {}: {}", a, b, cache.getAll(Set.of(a, b)).values());
-                    cache.put(a, "hello " + now);
-                    cache.put(b, "world " + now);
-                    LOGGER.info("New {}, {}: {}", a, b, cache.getAll(Set.of(a, b)).values());
+                    try (ClientTransaction tx = client.transactions().txStart()) {
+                        final String aValPrev = cache.get(a);
+                        final String bValPrev = cache.get(b);
+                        LOGGER.info("Previous {}, {}: {}, {}", a, b, aValPrev, bValPrev);
+                        if (lastAccepted.containsKey(a) && lastAccepted.containsKey(b)) {
+                            if (!lastAccepted.get(a).equals(aValPrev)) {
+                                LOGGER.error("MISMATCH @ {}: {} vs {}", a, lastAccepted.get(a), aValPrev);
+                            }
+                            if (!lastAccepted.get(b).equals(bValPrev)) {
+                                LOGGER.error("MISMATCH @ {}: {} vs {}", b, lastAccepted.get(b), bValPrev);
+                            }
+                        }
+
+                        final String aVal = "hello " + now;
+                        final String bVal = "world " + now;
+                        cache.put(a, aVal);
+                        cache.put(b, bVal);
+                        tx.commit();
+                        lastAccepted.put(a, aVal);
+                        lastAccepted.put(b, bVal);
+                        LOGGER.info("New {}, {}: {}", a, b, cache.getAll(Set.of(a, b)).values());
+                    }
                 } catch (ClientException ex) {
                     LOGGER.error("DB failed", ex);
                 }
