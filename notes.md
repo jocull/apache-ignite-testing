@@ -17,3 +17,9 @@ Partition loss matters:
 - `READ_WRITE_SAFE` you can write but only to available partitions (this option seems most appropriate if data is well-partitioned)
 - `IGNORE` would allow writes regardless, but can only be used with in-memory mode (no disk persistence)
 
+
+Checking baseline nodes:
+
+```
+docker exec -it cluster-a-ignite01-1 /opt/ignite/apache-ignite/bin/control.sh --baseline
+```
