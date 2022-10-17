@@ -10,27 +10,33 @@ services:
       - ../ignite-config.xml:/ignite-config.xml:ro
     ports:
       - "10803:10800"
+      - "8083:8083"
     environment:
       - CONFIG_URI=/ignite-config.xml
       - IGNITE_QUIET=false
+      - JVM_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8083 -Dcom.sun.management.jmxremote.rmi.port=8083 -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
   ignite05:
     image: apacheignite/ignite:2.13.0-jdk11
     volumes:
       - ../ignite-config.xml:/ignite-config.xml:ro
     ports:
       - "10804:10800"
+      - "8084:8084"
     environment:
       - CONFIG_URI=/ignite-config.xml
       - IGNITE_QUIET=false
+      - JVM_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8084 -Dcom.sun.management.jmxremote.rmi.port=8084 -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
   ignite06:
     image: apacheignite/ignite:2.13.0-jdk11
     volumes:
       - ../ignite-config.xml:/ignite-config.xml:ro
     ports:
       - "10805:10800"
+      - "8085:8085"
     environment:
       - CONFIG_URI=/ignite-config.xml
       - IGNITE_QUIET=false
+      - JVM_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8085 -Dcom.sun.management.jmxremote.rmi.port=8085 -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
   ignite-activate-02:
     image: apacheignite/ignite:2.13.0-jdk11
     depends_on:
