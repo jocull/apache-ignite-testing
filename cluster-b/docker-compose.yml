@@ -14,6 +14,7 @@ services:
     environment:
       - CONFIG_URI=/ignite-config.xml
       - IGNITE_QUIET=false
+      - AVAILABILITY_ZONE=az1
       - JVM_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8083 -Dcom.sun.management.jmxremote.rmi.port=8083 -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
   ignite05:
     image: apacheignite/ignite:2.13.0-jdk11
@@ -25,6 +26,7 @@ services:
     environment:
       - CONFIG_URI=/ignite-config.xml
       - IGNITE_QUIET=false
+      - AVAILABILITY_ZONE=az2
       - JVM_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8084 -Dcom.sun.management.jmxremote.rmi.port=8084 -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
   ignite06:
     image: apacheignite/ignite:2.13.0-jdk11
@@ -36,6 +38,7 @@ services:
     environment:
       - CONFIG_URI=/ignite-config.xml
       - IGNITE_QUIET=false
+      - AVAILABILITY_ZONE=az3
       - JVM_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8085 -Dcom.sun.management.jmxremote.rmi.port=8085 -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
   ignite-activate-02:
     image: apacheignite/ignite:2.13.0-jdk11

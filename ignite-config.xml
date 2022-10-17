@@ -15,13 +15,28 @@
                 <!-- Set the cache mode. -->
                 <property name="cacheMode" value="PARTITIONED"/>
                 <!-- Number of backup copies -->
-                <property name="backups" value="2"/>
+                <property name="backups" value="1"/>
                 <!-- Synchronization mode -->
                 <property name="writeSynchronizationMode" value="FULL_SYNC"/>
                 <!-- Partition loss policy -->
                 <property name="partitionLossPolicy" value="READ_WRITE_SAFE"/>
                 <!-- Set transaction capabilities -->
                 <property name="atomicityMode" value="TRANSACTIONAL"/>
+                <!-- Configure backup affinity -->
+                <property name="affinity">
+                  <bean class="org.apache.ignite.cache.affinity.rendezvous.RendezvousAffinityFunction">
+                      <property name="affinityBackupFilter">
+                          <bean class="org.apache.ignite.cache.affinity.rendezvous.ClusterNodeAttributeAffinityBackupFilter">
+                              <constructor-arg>
+                                  <array value-type="java.lang.String">
+                                      <!-- Backups must go to different AZs -->
+                                      <value>AVAILABILITY_ZONE</value>
+                                  </array>
+                              </constructor-arg>
+                          </bean>
+                      </property>
+                  </bean>
+              </property>
             </bean>
         </property>
         <!-- Persist to disk -->
