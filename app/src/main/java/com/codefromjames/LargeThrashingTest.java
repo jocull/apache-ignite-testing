@@ -8,7 +8,6 @@ import org.apache.ignite.client.IgniteClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,7 +29,7 @@ public class LargeThrashingTest implements Runnable {
 
     @Override
     public void run() {
-        final ClientCache<String, byte[]> cache = client.cache("myCache"); // Should already be created per config!
+        final ClientCache<String, byte[]> cache = client.cache("myCache");
         final MutableInt counter = new MutableInt(0);
         final Deque<String> keyRotation = new ArrayDeque<>(keySet);
         while (true) {

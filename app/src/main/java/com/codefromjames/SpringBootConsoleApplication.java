@@ -1,10 +1,6 @@
 package com.codefromjames;
 
-import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.ignite.Ignition;
-import org.apache.ignite.client.ClientCache;
-import org.apache.ignite.client.ClientException;
-import org.apache.ignite.client.ClientTransaction;
 import org.apache.ignite.client.IgniteClient;
 import org.apache.ignite.configuration.ClientConfiguration;
 import org.slf4j.Logger;
@@ -13,10 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
