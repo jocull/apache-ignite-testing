@@ -23,7 +23,7 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws InterruptedException {
+    public void run(String... args) {
         LOGGER.info("EXECUTING : command line runner");
 
         for (int i = 0; i < args.length; ++i) {
@@ -41,10 +41,9 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
                 .setReconnectThrottlingPeriod(5_000);
 
         try (final IgniteClient client = Ignition.startClient(cfg)) {
-            // TODO: A great place for multi-threaded load and consistency testing
             IntStream.range(0, 8)
                     .mapToObj(i -> {
-                        Thread t = new Thread(new LargeThrashingTest(client));
+                        Thread t = new Thread(new LargeThrashingTest(client, 50, 1024 * 10 * (i + 1)));
                         t.setName("ignite-pusher-" + i);
                         t.start();
                         return t;
