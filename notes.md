@@ -1,15 +1,13 @@
 If a partition loses data because owners all died you must acknowledge loss by resetting the cache state:
 
 ```bash
-./control.sh --host ignite01 --cache reset_lost_partitions myCache
-# Or...
-docker exec -it apache-ignite-cluster-ignite01-1 /opt/ignite/apache-ignite/bin/control.sh --host ignite01 --cache reset_lost_partitions myCache
+docker exec -it cluster-a-ignite01-1 /opt/ignite/apache-ignite/bin/control.sh --cache reset_lost_partitions myCache
 ```
 
 If you have a cache group, you need to reset by the group:
 
 ```bash
-docker exec -it apache-ignite-cluster-ignite01-1 /opt/ignite/apache-ignite/bin/control.sh --host ignite01 --cache reset_lost_partitions debugGroup
+docker exec -it cluster-a-ignite01-1 /opt/ignite/apache-ignite/bin/control.sh --cache reset_lost_partitions debugGroup
 ```
 
 Partition loss matters:
@@ -22,4 +20,10 @@ Checking baseline nodes:
 
 ```
 docker exec -it cluster-a-ignite01-1 /opt/ignite/apache-ignite/bin/control.sh --baseline
+```
+
+Checking distribution of partitions and statuses:
+
+```
+docker exec -it cluster-a-ignite01-1 /opt/ignite/apache-ignite/bin/control.sh --cache distribution null debugGroup
 ```
