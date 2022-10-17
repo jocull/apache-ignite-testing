@@ -17,6 +17,8 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class SpringBootConsoleApplication implements CommandLineRunner {
@@ -48,7 +50,21 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
 
         try (final IgniteClient client = Ignition.startClient(cfg)) {
             // TODO: A great place for multi-threaded load and consistency testing
-            new LargeThrashingTest(client).run();
+            IntStream.range(0, 4)
+                    .mapToObj(i -> {
+                        Thread t = new Thread(new LargeThrashingTest(client));
+                        t.setName("ignite-pusher-" + i);
+                        t.start();
+                        return t;
+                    })
+                    .collect(Collectors.toList())
+                    .forEach(t -> {
+                        try {
+                            t.join();
+                        } catch (InterruptedException ex) {
+                            LOGGER.info("Interrupted", ex);
+                        }
+                    });
         }
     }
 }
