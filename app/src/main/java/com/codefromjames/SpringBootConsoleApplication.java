@@ -42,7 +42,7 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
 
         try (final IgniteClient client = Ignition.startClient(cfg)) {
             // TODO: A great place for multi-threaded load and consistency testing
-            IntStream.range(0, 4)
+            IntStream.range(0, 8)
                     .mapToObj(i -> {
                         Thread t = new Thread(new LargeThrashingTest(client));
                         t.setName("ignite-pusher-" + i);
